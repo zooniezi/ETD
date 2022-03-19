@@ -8,7 +8,7 @@ class Tower:
         self.towX = x
         self.towY = y
         self.hasElement = False
-        self.element = None
+        self.element = element
 
     def targeting(self,mobMaster):# mobMaster: 라운드의 모든 몬스터 받아오기
         for i in mobMaster:
