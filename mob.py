@@ -23,7 +23,7 @@ SCREEN = WINDOW.set_mode((WIDTH,HEIGHT))
 gameFont = pygame.font.Font(None, 40)
 
 
-tierList = [["hp,armor,speed,dropGold,dropElement,damage"],[100,10,2,2,0,5],[150,15,2,2,0,5],[200,20,3,5,0,5],[250,25,3,5,0,5],[300,30,3,5,0,5],[1000,50,2,20,"elt",20],[1500,60,2,30,"elt",20],[2000,70,2,40,"elt",20],[2500,80,2,50,"elt",20],[5000,100,3,9999,0,100]]
+tierList = [["hp,armor,speed,dropGold,dropElement,damage,image"],[100,10,2,2,0,5,mine],[150,15,2,2,0,5,mine],[200,20,3,5,0,5,mine],[250,25,3,5,0,5],[300,30,3,5,0,5],[1000,50,2,20,"elt",20,sweeper],[1500,60,2,30,"elt",20],[2000,70,2,40,"elt",20],[2500,80,2,50,"elt",20],[5000,100,3,9999,0,100]]
 
 #시간 이용을 위한 설정
 
@@ -36,6 +36,7 @@ class Mob:
         self.dropGold = self.tier[3]
         self.dropElement = self.tier[4]
         self.damage = self.tier[5]
+        self.image = self.tier[6]
         self.index = index
         self.alive = True
         self.onMap = False
@@ -113,12 +114,12 @@ def spawn():
     cnt = 1
     for i in mobMaster:
         if i.onMap == True and cnt<=population:
-            SCREEN.blit(mine,(i.x,i.y))
+            SCREEN.blit(i.image,(i.x,i.y))
             leftHp = gameFont.render("{}".format(i.hp),True,CYAN)
             SCREEN.blit(leftHp,(i.x-5,i.y+20))
             cnt += 1
         if i.onMap == True and cnt>population:
-            SCREEN.blit(sweeper,(i.x,i.y))
+            SCREEN.blit(i.image,(i.x,i.y))
             leftHp = gameFont.render("{}".format(i.hp),True,CYAN)
             SCREEN.blit(leftHp,(i.x-5,i.y+20))
 
@@ -175,4 +176,3 @@ while running:
 
     pygame.display.update()
 
-    
