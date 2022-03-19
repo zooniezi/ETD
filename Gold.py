@@ -1,10 +1,10 @@
-class gold:
+class Gold:
     def __init__(self):
-        self.player_gold=100
+        self.playerGold=100
     
-    def gain_gold(self, plus_gold):
-        self.player_gold += plus_gold
+    def gain_gold(self, plusGold):
+        self.playerGold += plusGold
     
-    def lose_gold(self,minus_gold):
-        self.player_gold -= minus_gold
-Gold = gold()
+    def lose_gold(self,minusGold):
+        self.playerGold -= minusGold
+GOLD = Gold()
