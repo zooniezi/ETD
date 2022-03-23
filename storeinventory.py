@@ -1,9 +1,7 @@
 import element
-import gold
 import random
 
 availableElements = [11,21]
-gold=gold.Gold()
 ##################################################################################
 #확인용 변수들
 roundNumber=1
@@ -17,12 +15,12 @@ class Store:
         for i in range(3):
             self.shelf[i] = elementGenerate(random.sample(availableElements, 1))
 #돈을 지불하고 shelf 리스트를 구매 가능한 원소들 중에서 랜덤추출하여 새롭게 갱신
-    def reroll(self):
+    def reroll(self, gold):
         gold.playerGold -= self.rerollCost
         for i in range(3):
             self.shelf[i] = elementGenerate(random.sample(availableElements, 1))
 #shelf에 있는 원소중 해당 가격만큼 돈을 지불하고 
-    def buy(self, element):
+    def buy(self, gold, element, inventoryAndFactory):
         gold.playerGold -= element.price
         #self.shelf[shelfNumber]]=0 #산 원소가 있었던 칸 비우기
         inventoryAndFactory.inventory[inventoryAndFactory.findEmptyIndex()] = elementGenerate(element.index)
@@ -30,7 +28,7 @@ class Store:
                                                                                     #고정되어있는 원소 백과사전를 참조해서 인generate매소드를 사용해서 인벤토리에 새로운 원소 class를 생성해야함
                                                                                     #그리고 그 원소의 가격에 elt.price = real_price 대입해줘야 나중에 팔때 산가격에 팔수 있음->generate_element에서 해줘야할일
         
-    def sell(self, eltInInventory):
+    def sell(self, gold, eltInInventory):
         gold.playerGold += (eltInInventory.price)/2                                 #밸런싱 필요
         del eltInInventory
 
@@ -86,12 +84,6 @@ def findIndexMix():
 def findIndexLevelUp(indexNum):
     return indexNum+1
     
-def addTower(inventoryNum, towerNum, towermaster):
+def addTower(inventoryNum, towerNum, towermaster, inventoryAndFactory):
     towermaster[towerNum].element=inventoryAndFactory.inventory[inventoryNum]
     inventoryAndFactory.inventory[inventoryNum]=0
-##################################################################################
-
-inventoryAndFactory=InventoryAndFactory()
-store=Store()
-
-##################################################################################

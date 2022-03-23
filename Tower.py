@@ -9,8 +9,10 @@ class Tower:
         self.towY = y
         self.hasElement = False
         self.element = element
+        self.attackCounter = 0
 
     def targeting(self,mobMaster):# mobMaster: 라운드의 모든 몬스터 받아오기
+        targetMob = None
         for i in mobMaster:
             if i.alive == False:
                 continue

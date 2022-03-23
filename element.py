@@ -3,15 +3,25 @@ class Element:
         pass
     def damageDealt(self, mob):
         finalDamage = self.basicDamage - mob.armor
+        if finalDamage <= 0:
+            finalDamage = 0
         mob.hp -= finalDamage
 
+class Empty():
+    def __init__(self):
+        self.basicDamage = 0
+        self.index = 0
+        self.price = 0
+        self.attackSpeed = 0
+        self.attackRange = 0
+
+
 class Fire(Element):
-    def __init__(self, basicDamage, index, price, attackSpeed, attackRange, splashRange, splashDamage):
-        super.__init__()
-        self.basicDamage = 10
+    def __init__(self):
+        self.basicDamage = 20
         self.index = 11
         self.price = 1
-        self.attackSpeed = 1
+        self.attackSpeed = 30
         self.attackRange = 100
         self.splashRange = 50
         self.splashDamage = 1
