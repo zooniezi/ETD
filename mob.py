@@ -146,33 +146,3 @@ print(playerHp)
 totalTime = 60
 start_ticks = pygame.time.get_ticks()
 
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pg.QUIT:
-            running = False
-
-    SCREEN.fill(BLACK)
-
-    for i in range(1,population+1):
-        if timedelta(seconds = i-1) <= datetime.now() - atk_time:
-            mobMaster[i-1].move()
-
-
-    pg.time.Clock().tick(FPS)
-
-
-    start()
-    spawn()
-    
-    # 경과 시간 계산
-    elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000
-
-    # 타이머
-    timer = gameFont.render("time: " + str(int(totalTime-elapsed_time)), True, (255,255,255))
-
-    #경과 시간 표시
-    SCREEN.blit(timer, (240, 10))
-
-    pygame.display.update()
-

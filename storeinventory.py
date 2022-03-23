@@ -1,9 +1,9 @@
 import element
-import Gold
+import gold
 import random
 
 availableElements = [11,21]
-gold=Gold.Gold()
+gold=gold.Gold()
 ##################################################################################
 #확인용 변수들
 roundNumber=1
@@ -16,16 +16,17 @@ class Store:
         self.shelf = [0, 0, 0]
         for i in range(3):
             self.shelf[i] = elementGenerate(random.sample(availableElements, 1))
-
+#돈을 지불하고 shelf 리스트를 구매 가능한 원소들 중에서 랜덤추출하여 새롭게 갱신
     def reroll(self):
         gold.playerGold -= self.rerollCost
         for i in range(3):
             self.shelf[i] = elementGenerate(random.sample(availableElements, 1))
-        
+#shelf에 있는 원소중 해당 가격만큼 돈을 지불하고 
     def buy(self, element):
         gold.playerGold -= element.price
         #self.shelf[shelfNumber]]=0 #산 원소가 있었던 칸 비우기
-        elementGenerate(element.index)   
+        inventoryAndFactory.inventory[inventoryAndFactory.findEmptyIndex()] = elementGenerate(element.index)
+         
                                                                                     #고정되어있는 원소 백과사전를 참조해서 인generate매소드를 사용해서 인벤토리에 새로운 원소 class를 생성해야함
                                                                                     #그리고 그 원소의 가격에 elt.price = real_price 대입해줘야 나중에 팔때 산가격에 팔수 있음->generate_element에서 해줘야할일
         
@@ -39,6 +40,12 @@ class InventoryAndFactory:
     def __init__(self):
         self.inventory=[0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.factory=[0, 0, 0]                                                        #조합버튼이 따로 있음
+
+    def findEmptyIndex(self):
+        for i in range(9):
+            if self.inventory[i] == 0:
+                return i
+        return -1 #빈칸없으면 -1반환
 
     def addFactory(self, inventoryNum, factoryNum):
         self.factory[factoryNum]=self.inventory[inventoryNum]
@@ -88,15 +95,3 @@ inventoryAndFactory=InventoryAndFactory()
 store=Store()
 
 ##################################################################################
-#확인용 출력부
-store.buy(A)                                                                        #어떻게 원소를 넣을지 나중에 생각해야함
-print(gold.playerGold)
-store.sell(A)
-print(gold.playerGold)
-store.sell(B)
-print(gold.playerGold)
-store.reroll()
-print(gold.playerGold)
-store.reroll()
-print(gold.playerGold)
-print(store.shelf)
