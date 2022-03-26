@@ -46,12 +46,185 @@ looptime = 0
 #전역변수들
 towerMaster = []
 mobMaster = []
-
+checkList=[[None, None],[None, None]]
 inventoryAndFactory=storeinventory.InventoryAndFactory()
 store=storeinventory.Store()
 
+############################ 마우스 클릭 기능 구현 태규, 정수가 함 ㅅㄱ
+"""
+def isInInventory(coordinate):
+    mousePosition = coordinate
+    if mousePosition != [None, None]:
+        if mousePosition[0] >=  779 and mousePosition[0] <=  (779+80*3) and mousePosition[1] >=  0 and mousePosition[1] <=  80*3:
+            return True
+        else:
+            return False
 
+def whatIsInventoryNum(coordinate):
+    mousePosition = coordinate
+    if mousePosition[0] >=  779 and mousePosition[0] <=  (779+80) and mousePosition[1] >=  0 and mousePosition[1] <=  80:
+        return 0
+    if mousePosition[0] >  859 and mousePosition[0] <=  (859+80) and mousePosition[1] >=  0 and mousePosition[1] <=  80:
+        return 1
+    if mousePosition[0] >  939 and mousePosition[0] <=  (939+80) and mousePosition[1] >=  0 and mousePosition[1] <=  80:
+        return 2
+    if mousePosition[0] >=  779 and mousePosition[0] <=  (779+80) and mousePosition[1] >  80 and mousePosition[1] <=  160:
+        return 3
+    if mousePosition[0] >  859 and mousePosition[0] <=  (859+80) and mousePosition[1] >  80 and mousePosition[1] <=  160:
+        return 4
+    if mousePosition[0] >  939 and mousePosition[0] <=  (939+80) and mousePosition[1] >  80 and mousePosition[1] <=  160:
+        return 5
+    if mousePosition[0] >=  779 and mousePosition[0] <=  (779+80) and mousePosition[1] >  160 and mousePosition[1] <=  240:
+        return 6
+    if mousePosition[0] >  859 and mousePosition[0] <=  (859+80) and mousePosition[1] >  160 and mousePosition[1] >=  240:
+        return 7
+    if mousePosition[0] >  939 and mousePosition[0] <=  (939+80) and mousePosition[1] >  160 and mousePosition[1] >=  240:
+        return 8
 
+def isInFactory(coordinate):
+    mousePosition = coordinate
+    if mousePosition != [None, None]:
+        if mousePosition[0] >=  779 and mousePosition[0] <=  (779+60*4) and mousePosition[1] >= 250 and mousePosition[1] <= 310:
+            return True
+        else :
+            return False
+
+def whatIsFactoryNum(coordinate):
+    mousePosition = coordinate
+    if mousePosition[0] >=  779 and mousePosition[0] <=  (779+60) and mousePosition[1] >= 250 and mousePosition[1] <= 310:
+        return 0
+    if mousePosition[0] >  839 and mousePosition[0] <=  (839+60) and mousePosition[1] >= 250 and mousePosition[1] <= 310:
+        return 1
+    if mousePosition[0] >  899 and mousePosition[0] <=  (899+60) and mousePosition[1] >= 250 and mousePosition[1] <= 310:
+        return 2
+    if mousePosition[0] >  959 and mousePosition[0] <=  (959+60) and mousePosition[1] >= 250 and mousePosition[1] <= 310:
+        return 3#조합 버튼
+    # 리셋 버튼 추가 필요하고 일단은 리셋버튼 누르면 조합이 됨
+
+def isInStore(coordinate):
+    mousePosition = coordinate
+    if mousePosition != [None, None]:
+        if (mousePosition[0] >=  779 and mousePosition[0] <=  (779+60*3) and mousePosition[1] >= 320 and mousePosition[1] <= 380) or (mousePosition[0] >=  (779+60*3) and mousePosition[0] <=  (779+60*4) and mousePosition[1] > 350 and mousePosition[1] <= 380):
+            return True
+        else :
+            return False
+
+def whatIsStoreNum(coordinate):
+    mousePosition = coordinate
+    if mousePosition[0] >=  779 and mousePosition[0] <=  (779+60) and mousePosition[1] >= 320 and mousePosition[1] <= 380:
+        return 0
+    if mousePosition[0] >  839 and mousePosition[0] <=  (839+60) and mousePosition[1] >= 320 and mousePosition[1] <= 380:
+        return 1
+    if mousePosition[0] >  869 and mousePosition[0] <=  (869+60) and mousePosition[1] >= 320 and mousePosition[1] <= 380:
+        return 2
+    if mousePosition[0] >  929 and mousePosition[0] <=  (929+60) and mousePosition[1] > 350 and mousePosition[1] <= 380:
+        return 3#이건 리롤 버튼
+
+def isInTower(coordinate):
+    mousePosition = coordinate
+    for i in towerMaster:
+        if mousePosition != [None, None]:
+            if mousePosition[0] > i.towX and mousePosition[0] < i.towX + 50 and mousePosition[1] > i.towY and mousePosition[1] < i.towY + 50:
+                return True
+            else:
+                return False
+
+def whatIsTowerNum(coordinate):
+    mousePosition = coordinate
+    num = 0
+    for i in towerMaster:
+        if mousePosition[0] > i.towX and mousePosition[0] < i.towX + 50 and mousePosition[1] > i.towY and mousePosition[1] < i.towY + 50:
+            return num
+        num += 1    
+    return num
+
+def resetCheckList():
+    checkList=[[None, None],[None, None]]
+
+def playerAction():
+    #일단 클릭 좌표가 checkList에 들어감
+    if checkList[0]==[None, None]:
+        checkList[0][0]=mousePosition()[0]
+        checkList[0][1]=mousePosition()[1]
+    else :
+        checkList[1][0]=mousePosition()[0]
+        checkList[1][1]=mousePosition()[1]
+
+    #좌표에 따라서 경우의 수를 따져서 실행을 함
+    #CheckList 두번째가 None일경우 if문이 False로 실행이 안됨.(조합버튼 제외)
+
+    if isInInventory(checkList[0]):
+        inventoryNum1=whatIsInventoryNum(checkList[0])
+        if isInInventory(checkList[1]):
+            #인벤토리 순서 바꾸기
+            inventoryNum2=whatIsInventoryNum(checkList[1])
+            inventoryAndFactory.inventory[inventoryNum1], inventoryAndFactory.inventory[inventoryNum2] = inventoryAndFactory.inventory[inventoryNum2], inventoryAndFactory.inventory[inventoryNum1]
+            resetCheckList()
+        elif isInFactory(checkList[1]):
+            #인벤토리에서 팩토리 가기
+            inventoryAndFactory.addFactory(inventoryNum1, whatIsFactoryNum(checkList[1]))
+            resetCheckList()
+        elif isInTower(checkList[1]):
+            #인벤토리에서 타워로 이동
+            inventoryAndFactory.addTower(inventoryNum1, whatIsTowerNum(checkList[1]), towerMaster, inventoryAndFactory)
+            resetCheckList()
+
+    if isInFactory(checkList[0]):
+        factoryNum1=whatIsFactoryNum(checkList[0])
+        #조합 버튼 누름
+        if factoryNum1 == 3:
+            if len(inventoryAndFactory.factory)==3 and inventoryAndFactory.factory[0].index== inventoryAndFactory.factory[1].index and inventoryAndFactory.factory[2].index == inventoryAndFactory.factory[1].index :
+                inventoryAndFactory.compoundLevelUp()#믹스도 넣어야함 나중에
+                resetCheckList()
+        else:
+            if isInInventory(checkList[1]):
+                #팩토리에서 인벤토리로 이동
+                inventoryNum2=whatIsInventoryNum(checkList[1])
+                inventoryAndFactory.addInventory(inventoryNum2, factoryNum1)             
+                resetCheckList()
+            elif isInFactory(checkList[1]):
+                #팩토리에서 순서 바꾸기
+                factoryNum2=whatIsFactoryNum(checkList[1])
+                if factoryNum2 != 3:
+                    inventoryAndFactory.factory[factoryNum1], inventoryAndFactory.inventory[factoryNum2] = inventoryAndFactory.inventory[factoryNum2], inventoryAndFactory.inventory[factoryNum1]
+                    resetCheckList()
+                #두번째 클릭으로 조합 버튼 누름
+                elif factoryNum2 == 3 and len(inventoryAndFactory.factory)==3 and inventoryAndFactory.factory[0].index== inventoryAndFactory.factory[1].index and inventoryAndFactory.factory[2].index == inventoryAndFactory.factory[1].index :
+                    inventoryAndFactory.compoundLevelUp()#믹스도 넣어야함 나중에
+                    resetCheckList()
+            elif isInTower(checkList[1]):
+                #팩토리에서 타워로 이동
+                #나중에 추가
+                resetCheckList()
+    if isInStore(checkList[0]) or isInStore(checkList[1]):
+        if checkList[1]==[None, None]:
+            storeNum=whatIsStoreNum(checkList[0])
+        else:
+            storeNum=whatIsStoreNum(checkList[1])
+        if whatIsStoreNum != 3:
+            store.buy(store.shelf[storeNum])
+        else:
+            inventoryAndFactory.reroll(gold.playerGold)
+    if isInTower(checkList[0]):
+        towerNum1 = whatIsTowerNum(checkList[0])
+        if towerMaster[towerNum1].element.price == 0:
+            resetCheckList()
+        elif isInInventory(checkList[1]):
+            #타워에서 인벤토리로 이동
+            inventoryNum2 = whatIsInventoryNum(checkList[1])
+            inventoryAndFactory.inventory[inventoryNum2] = towerMaster[towerNum1].element
+            towerMaster[towerNum1].element = storeinventory.element.Empty()
+            resetCheckList()
+        elif isInFactory(checkList[1]):
+            #타워에서 팩토리로 이동
+            #나중에 업데이트
+            resetCheckList()
+        elif isInTower(checkList[1]):
+            #타워끼리 순서 바꾸기
+            towerNum2 = whatIsTowerNum(checkList[1])
+            towerMaster[towerNum1].element, towerMaster[towerNum2].element = towerMaster[towerNum2].element, towerMaster[towerNum1].element
+            resetCheckList()
+"""
 
 ############################# 버튼 클래스 준학이가 함 ㅈㅅ
 class Button:
@@ -251,7 +424,7 @@ for i in range(6):
         towerMaster.append(tower.Tower(towerCoordinate[i][0], towerCoordinate[i][1], storeinventory.element.Fire()))
     else:
         towerMaster.append(tower.Tower(towerCoordinate[i][0], towerCoordinate[i][1], storeinventory.element.Water()))
-"""원본함수(아래에서 수정중)
+"""원본함수(공격속도 루프단위 계산임, 이제 안쓸듯함)
 def towerAttack(tm):
     for thisTower in tm:
         tarMob = thisTower.targeting(mobMaster)
@@ -302,6 +475,9 @@ def gameStart():
             if event.type == pg.QUIT:
                 running = False
                 sys.exit()
+        #태규 정수
+#        if LMBDown(event):
+#           playerAction()
 
         looptime = CLOCK.get_time()
         SCREEN.fill(BLACK)
