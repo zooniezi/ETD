@@ -11,14 +11,14 @@ roundNumber=1
 class Store:
     def __init__(self):
         self.rerollCost=2                                                  
-        self.shelf = [0, 0, 0]
+        self.shelf = [0,0,0]
         for i in range(3):
-            self.shelf[i] = elementGenerate(random.sample(availableElements, 1))
+            self.shelf[i] = elementGenerate(random.sample(availableElements, 1)[0])
 #돈을 지불하고 shelf 리스트를 구매 가능한 원소들 중에서 랜덤추출하여 새롭게 갱신
     def reroll(self, gold):
         gold.playerGold -= self.rerollCost
         for i in range(3):
-            self.shelf[i] = elementGenerate(random.sample(availableElements, 1))
+            self.shelf[i] = elementGenerate(random.sample(availableElements, 1)[0])
 #shelf에 있는 원소중 해당 가격만큼 돈을 지불하고 
     def buy(self, gold, element, inventoryAndFactory):
         gold.playerGold -= element.price
@@ -36,8 +36,8 @@ class Store:
 
 class InventoryAndFactory:
     def __init__(self):
-        self.inventory=[0, 0, 0, 0, 0, 0, 0, 0, 0]
-        self.factory=[0, 0, 0]                                                        #조합버튼이 따로 있음
+        self.inventory=[element.Fire(), element.Water(), element.Fire(), element.Water(), element.Fire(), element.Fire(), element.Fire(), 0,0]
+        self.factory=[0,0,0]                                                        #조합버튼이 따로 있음
 
     def findEmptyIndex(self):
         for i in range(9):

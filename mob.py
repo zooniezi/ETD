@@ -1,5 +1,5 @@
 #몹이 경로 끝을 나갔을 때의 시간
-from gold import Gold
+import gold
 from datetime import timedelta
 from datetime import datetime
 playerHp = 100
@@ -45,20 +45,18 @@ class Mob:
                 self.y -= self.speed
 
             self.attack()
-            self.die()
+            self.die(gold.playerGold)
 
         #mob이 죽거나 경로 끝까지 이동했을 경우 움직임을 멈추고 동시에 사라짐
         elif self.onMap == False and self.alive == False:
             pass
 
     #몹의 hp가 0 이하가 되었을 때 맵에서 삭제, 플레이어 골드량에 해당 골드 추가
-    def die(self):
-        #global playergold
+    def die(self, playerGold):
         if self.hp <= 0 and self.alive == True:
             self.alive = False
             self.onMap = False
-            #playergold.playerGold += self.tier[3]
-            print(self.alive)
+            playerGold.playerGold += self.tier[3]
             del(self)
             
 
@@ -69,7 +67,6 @@ class Mob:
             playerHp -= self.tier[5]
             self.alive = False
             self.onMap = False
-            print(playerHp)
 
 class Minion(Mob):
     def __init__(self,tier,index):

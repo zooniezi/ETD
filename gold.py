@@ -7,3 +7,5 @@ class Gold:
     
     def lose_gold(self,minusGold):
         self.playerGold -= minusGold
+
+playerGold = Gold()

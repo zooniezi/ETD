@@ -21,21 +21,26 @@ class Fire(Element):
         self.basicDamage = 20
         self.index = 11
         self.price = 1
-        self.attackSpeed = 30
+        self.attackSpeed = 300
+        self.attackCounter = self.attackSpeed
         self.attackRange = 100
         self.splashRange = 50
         self.splashDamage = 1
+        self.attackColor = (255,0,0)
+        self.image = "ElementIcon/fire.png"
 
 
 class Water(Element):
-    def __init__(self, basicDamage, index, price, attackSpeed, attackRange, slowPercentage):
-        super.__init__()
-        self.basicDamage = 5
+    def __init__(self):
+        self.basicDamage = 15
         self.index = 21
         self.price = 1
-        self.attackSpeed = 1
-        self.attackRange = 100
+        self.attackSpeed = 800
+        self.attackCounter = self.attackSpeed
+        self.attackRange = 200
         self.slowPercentage = 0.4
+        self.attackColor = (0,0,255)
+        self.image = "ElementIcon/drop.png"
 
     def slow(self, mob):
         mob.speed = mob.speed*(1-self.slowPercentage)
